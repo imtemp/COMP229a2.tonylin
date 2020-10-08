@@ -1,0 +1,46 @@
+<main class="container">
+    <div class='jumbotron'>
+        <h1 class="display-4"><%= title %></h1>
+        <br>
+        <div class="infoContainer">
+            <p class="solid" id="card">
+                Tony Lin <br>
+                (647) 708-9370 <br>
+                t.lin0919@gmail.com
+            </p>
+            <br>
+            <br>
+            <p>
+                Fill out the form below to contact me.
+            </p>
+            <br>
+        </div>
+        <div class="inputForm">
+            <form action="/" method="get" id="form1">
+                <ul>
+                    <li>
+                        First Name: 
+                        <input>
+                    </li>
+                    <li>
+                        Last Name: 
+                        <input>
+                    </li>
+                    <li>
+                        Phone Number: 
+                        <input>
+                    </li>
+                    <li>
+                        E-Mail: 
+                        <input>
+                    </li>
+                    <li>
+                        Message:
+                        <textarea rows="4" cols="40"></textarea>
+                    </li>
+                </ul>
+            </form>
+            <button class="button" type="submit" form="form1" value="Submit" onclick="messageSent()">Submit</button> 
+        </div>
+   </div>
+</main>
