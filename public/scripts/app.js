@@ -5,6 +5,10 @@ Student ID: 301071193
 Date: October 7
 */
 
+var user;
+var password;
+
+
 (function(){
 
     function Start()
@@ -21,4 +25,15 @@ Date: October 7
 function messageSent(){
     var sent = "Your message has been sent.";
     alert (sent);
+}
+
+function authenticate(){
+    user = document.getElementById('password');
+    password = document.getElementById('username');
+    if(user != 'test' && password != 'test'){
+        
+    }
+    else{
+        res.redirect('/contact-list');
+    }
 }
