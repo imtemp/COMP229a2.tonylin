@@ -1,8 +1,22 @@
+/*
+File: app.js
+Name: Tony Lin
+Student ID: 301071193
+Date: October 7
+*/
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+
+// authentication modules
+let session = require('express-session');
+let passport = require('passport');
+let passportLocal = require('passport-local');
+let localStrategy = passportLocal.Strategy;
+let flash = require('connect-flash');
 
 // database
 let mongoose=require('mongoose');
@@ -19,8 +33,8 @@ mongoDB.once('open', ()=>{
 
 var indexRouter = require('../routes/index');
 var usersRouter = require('../routes/users');
-var contactlistRouter = require('../routes/contactlist.js');
-var userRouter = require('../routes/user.js');
+var contactlistRouter = require('../routes/contactlist');
+
 var app = express();
 
 // view engine setup
@@ -34,10 +48,35 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../../public')));
 app.use(express.static(path.join(__dirname, '../../node_modules')));
 
+//set up express session
+app.use(session({
+  secret: "SomeSecret",
+  saveUninitialized: false,
+  resave: false
+}))
+
+// init flash
+app.use(flash());
+
+// init passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// passport user config
+// create user model
+let userModel = require('../models/user');
+let User = userModel.User;
+
+// implement a user authentication
+passport.use(User.createStrategy());
+
+// serialize and deserialize user info
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.serializeUser());
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/contact-list', contactlistRouter);
-app.use('/login', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

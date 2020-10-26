@@ -1,3 +1,9 @@
+/*
+File: contactlist.js
+Name: Tony Lin
+Student ID: 301071193
+Date: October 21
+*/
 let mongoose = require('mongoose');
 
 // model class

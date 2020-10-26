@@ -1,95 +1,44 @@
+/*
+File: contactlist.js
+Name: Tony Lin
+Student ID: 301071193
+Date: October 21
+*/
+
 let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
 
+let passport = require('passport');
+
 // connect to schema
 let Contact = require('../models/contactlist.js');
 
+let userController = require('../controllers/user');
+/*
+function requireAuth(req, res, next){
+    if(!req.isAuthenticated()){
+        return res.redirect('/login');
+    }
+    next();
+}
+*/
 /* get route for contact list - read operation */
-router.get('/', (req, res, next) => {
-    Contact.find((err, ContactList) =>{
-        if(err)
-        {
-            return console.error(err);
-        }
-        else
-        {
-            res.render('contact/list', {title: 'Contact List', ContactList: ContactList});
-        }
-    });
-});
+router.get('/', userController.displayContactList);
 
 // Get Route for Add page - CREATE Operation
-router.get('/add', (req, res, next)=>{
-    res.render('contact/add', {title: 'Add Contact'})
-})
+router.get('/add', userController.displayAddPage);
+
 // Post Route for Add page - CREATE Operation
-router.post('/add', (req, res, next)=>{
-    let newContact = Contact({
-        "name": req.body.name,
-        "number": req.body.number,
-        "email": req.body.email
-    })
+router.post('/add', userController.processAddPage);
 
-    Contact.create(newContact, (err, Contact) =>{
-        if(err){
-            console.log(err);
-            res.end(err);
-        }
-        else{
-            res.redirect('/contact-list');
-        }
-    })
-})
 // Get Route for Edit page - UPDATE Operation
-router.get('/edit/:id', (req, res, next)=>{
-    let id = req.params.id;
+router.get('/edit/:id', userController.displayEditPage);
 
-    Contact.findById(id, (err, currentContact) =>{
-        if(err){
-            console.log(err);
-            res.end(err);
-        }
-        else{
-            // show edit
-            res.render('contact/edit', {title: 'Edit Contact', contact: currentContact})
-        }
-    })
-})
 // Post Route for Edit page - UPDATE Operation
-router.post('/edit/:id', (req, res, next)=>{
-    let id = req.params.id
-    let updatedContact = Contact({
-        "_id": id,
-        "name": req.body.name,
-        "number": req.body.number,
-        "email": req.body.email
-    })
+router.post('/edit/:id', userController.processEditPage);
 
-    Contact.updateOne({_id: id}, updatedContact, (err) =>{
-        if(err){
-            console.log(err);
-            res.end(err);
-        }
-        else{
-            // refresh list
-            res.redirect('/contact-list');
-        }
-    })
-})
 // Get to perform deletion 
-router.get('/delete/:id', (req, res, next)=>{
-    let id = req.params.id;
-
-    Contact.remove({_id: id}, (err) =>{
-        if(err){
-            console.log(err);
-            res.end(err);
-        }
-        else{
-            res.redirect('/contact-list');
-        }
-    })
-})
+router.get('/delete/:id', userController.performDelete);
 
 module.exports = router;

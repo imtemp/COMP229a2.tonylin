@@ -1,5 +1,5 @@
 /*
-File: user.css
+File: users.js
 Name: Tony Lin
 Student ID: 301071193
 Date: October 7

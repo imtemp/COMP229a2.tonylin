@@ -14,6 +14,17 @@ var password;
     function Start()
     {
         console.log("App started...");
+
+        let deleteButton = document.querySelectorAll('.btn-danger')
+
+        for(button of deleteButton){
+            button.addEventListener('click', (event) =>{
+                if(!confirm("Are you sure?")){
+                    event.preventDefault();
+                    window.location.assign('/contact-list');
+                }
+            })
+        }
     }
 
     window.addEventListener("load", Start);
@@ -25,15 +36,4 @@ var password;
 function messageSent(){
     var sent = "Your message has been sent.";
     alert (sent);
-}
-
-function authenticate(){
-    user = document.getElementById('password');
-    password = document.getElementById('username');
-    if(user != 'test' && password != 'test'){
-        
-    }
-    else{
-        res.redirect('/contact-list');
-    }
 }

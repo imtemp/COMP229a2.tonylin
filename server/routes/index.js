@@ -5,36 +5,43 @@ Student ID: 301071193
 Date: October 7
 */
 
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
+
+let indexController = require('../controllers/index');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Home' });
-});
+router.get('/', indexController.displayHomePage);
 
-router.get('/home', function(req, res, next) {
-  res.render('index', { title: 'Home' });
-});
+/* GET home page. */
+router.get('/home', indexController.displayHomePage);
 
-/* GET about page. */
-router.get('/about', function(req, res, next) {
-  res.render('index', { title: 'About' });
-});
+/* GET About Us page. */
+router.get('/about', indexController.displayAboutPage);
 
-/* GET project page. */
-router.get('/projects', function(req, res, next) {
-  res.render('index', { title: 'Projects' });
-});
+/* GET Products page. */
+router.get('/projects', indexController.displayProjectsPage);
 
-/* GET services page. */
-router.get('/services', function(req, res, next) {
-  res.render('index', { title: 'Services' });
-});
+/* GET Services page. */
+router.get('/services', indexController.displayServicesPage);
 
-/* GET contact page. */
-router.get('/contact', function(req, res, next) {
-  res.render('index', { title: 'Contact' });
-});
+/* GET Contact Us page. */
+router.get('/contact', indexController.displayContactPage);
 
+// Get Login Page
+router.get('/login', indexController.displayLoginPage);
+
+// Post Login Page
+router.post('/login', indexController.processLoginPage);
+
+router.get('/register', indexController.displayRegisterPage);
+
+/* POST Route for processing the Register page */
+router.post('/register', indexController.processRegisterPage);
+
+/* GET to perform UserLogout */
+router.get('/logout', indexController.performLogout);
 module.exports = router;
+
+
+
